@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
 
-const NewDeliveryScreen = ({ navigation }) => {
+const NewDeliveryScreen = ({ navigation, addDelivery }) => {
   const [pickupAddress, setPickupAddress] = useState('');
   const [deliveryAddress, setDeliveryAddress] = useState('');
   const [recipientName, setRecipientName] = useState('');
@@ -11,7 +11,6 @@ const NewDeliveryScreen = ({ navigation }) => {
   const [error, setError] = useState('');
 
   const handleContinue = () => {
-    // Validação simples
     if (
       !pickupAddress ||
       !deliveryAddress ||
@@ -24,7 +23,6 @@ const NewDeliveryScreen = ({ navigation }) => {
       return;
     }
 
-    // Aqui você pode enviar os dados para uma API ou salvá-los localmente
     const deliveryData = {
       pickupAddress,
       deliveryAddress,
@@ -32,12 +30,10 @@ const NewDeliveryScreen = ({ navigation }) => {
       weight: parseFloat(weight),
       value: parseFloat(value),
     };
-    console.log('Dados da entrega:', deliveryData);
 
-    // Redirecionar para a próxima tela (ex.: Entregas Ativas)
-    // navigation.navigate('ActiveDeliveries', { delivery: deliveryData });
+    addDelivery(deliveryData); // Adiciona a entrega ao estado global
     setError('');
-    alert('Entrega criada com sucesso!'); // Placeholder até termos a tela de entregas ativas
+    navigation.navigate('ActiveDeliveries'); // Redireciona para Entregas Ativas
   };
 
   return (
